@@ -1,3 +1,11 @@
+/****************************************************************
+*      Author: 
+*      Dr. Rashed Karim 
+*      Department of Biomedical Engineering, King's College London
+*      Email: rashed 'dot' karim @kcl.ac.uk  
+*      Copyright (c) 2016
+*****************************************************************/
+
 #include <irtkImage.h>
 #include <fstream>
 #include <vector>
