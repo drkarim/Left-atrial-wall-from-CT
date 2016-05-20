@@ -12,7 +12,7 @@ Note that the program assumes that the input images are CTA (contrast-enhanced a
 
 This program outputs the la wall segmented from endocardial segmentation based on intensity values [t1,t2] and dilation with n steps. 
 
-The program expects a binary mask to be provided as <la_mask>. This is the endocardial segmentation of the atrial blood pool. 
+The program expects a binary mask to be provided as an input parameter ```<la_mask>```, where ```1``` is set as endocardium. This is the endocardial segmentation of the atrial blood pool. 
 
 All input image files are either NifTII or GIPL or HDR Analyze. 
 
