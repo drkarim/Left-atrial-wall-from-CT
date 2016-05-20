@@ -20,7 +20,8 @@ int main(int argc, char **argv)
        double t1, t2, iterations;
        bool skip_neigbours; 
        
-       int maxX, maxY, maxZ, maxX2, maxY2, maxZ2;  
+       int maxX, maxY, maxZ, maxX2, maxY2, maxZ2;
+       int is_debug_mode;  
        
        irtkRealPixel *ptr1, *ptr2;
        
@@ -28,7 +29,7 @@ int main(int argc, char **argv)
 		
 		if (argc < 7) 
 		{
-			cout << "\nUsage: la_wall <input_img> <la_mask> <output_img> <intensity_t1> <intensity_t2> <iterations_n>\n\nThis program outputs" 
+			cout << "\nUsage: la_wall <input_img> <la_mask> <output_img> <intensity_t1> <intensity_t2> <iterations_n> <debug_mode>\n\nThis program outputs" 
             "the la wall segmented from endocardial segmentation based on intensity values [t1,t2] and dilation with n steps" << endl;
 			exit(1); 
 		}
@@ -50,6 +51,9 @@ int main(int argc, char **argv)
        argv++; 
        argc--; 
        iterations = atoi(argv[1]); 
+       argv++; 
+       argc--; 
+       is_debug_mode = atoi(argv[1]); 
        argv++; 
        argc--; 
        
@@ -149,6 +153,19 @@ int main(int argc, char **argv)
             prev_dilation_label = this_dilation_label;      // advance the label
             
        }  // end dilation iteration loop 
+       
+       if (is_debug_mode <= 0)
+       {
+           // Fix the output so that only a binary image is output 
+           for (i=0;i<maxX;i++) for (j=0;j<maxY;j++)  for (k=0;k<maxZ;k++) {
+               short v = out_img[i][j][k]; 
+               
+               if (v==1)
+                out_img[i][j][k] = 0; 
+               else if (v>1)
+                out_img[i][j][k] = 1;
+           }
+       }
        
        cout << "Completed segmenting atrial wall, now writing to output image .. " << endl;
        // write the output array to an image 
