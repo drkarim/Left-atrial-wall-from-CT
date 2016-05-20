@@ -6,14 +6,16 @@
 *      Copyright (c) 2016
 *****************************************************************/
 
+// Makes use of the proprietory Image Registration Toolkit library (IRTK) from Imperial Colllege London. 
 #include <irtkImage.h>
+
+// Other standard C libraries 
 #include <fstream>
 #include <vector>
 
-
 int main(int argc, char **argv)
 {
-		
+	
        char *in_file, *out_file, *la_mask_file;
        double t1, t2, iterations;
        bool skip_neigbours; 
@@ -94,7 +96,7 @@ int main(int argc, char **argv)
        prev_dilation_label = 1; 
        
        for (int dilations=0;dilations < iterations;dilations++) {
-        
+            
             this_dilation_label = 1+prev_dilation_label;
         
             // iterate through the input image 
@@ -114,18 +116,28 @@ int main(int argc, char **argv)
                                 {
                                     if (i+a >= 0 && i+a < maxX && j+b >= 0 && j+b < maxY && k+c >= 0 && k+c < maxZ)
                                     {
-                                        //double neighbour = in_img.Get(i+a, j+b, k+c);
-                                        short neighbour = out_img[i+a][j+b][k+c]; 
-                                        if (neighbour == prev_dilation_label)
-                                        {
-                                            // check for intensity [t1,t2]
-                                            double val = in_img.Get(i,j,k); 
-                                            if (val >= t1 && val <= t2)
+                                        short this_pixel = out_img[i][j][k];
+                                                                                
+                                        if (this_pixel == 0) {
+                                            //double neighbour = in_img.Get(i+a, j+b, k+c);
+                                            short neighbour = out_img[i+a][j+b][k+c]; 
+                                            if (neighbour == prev_dilation_label)
                                             {
-                                                out_img[i][j][k] = this_dilation_label;    
-                                            } 
-                                            skip_neigbours = true;
-                                        }    
+                                                // check for intensity [t1,t2]
+                                                double val = in_img.Get(i,j,k);
+                                                
+                                                if (dilations == 0)
+                                                {
+                                                    out_img[i][j][k] = this_dilation_label;
+                                                } 
+                                                else if (val >= t1 && val <= t2)            
+                                                {
+                                                    out_img[i][j][k] = this_dilation_label;    
+                                                }
+                                                
+                                                skip_neigbours = true;
+                                            }
+                                        }
                                     }       // end if
                                 }
                             }
@@ -134,12 +146,15 @@ int main(int argc, char **argv)
                 }
             }   // end image iteration loop 
             
+            prev_dilation_label = this_dilation_label;      // advance the label
+            
        }  // end dilation iteration loop 
        
        cout << "Completed segmenting atrial wall, now writing to output image .. " << endl;
        // write the output array to an image 
        irtkGreyImage out_img2;
-       out_img2 = irtkGreyImage(maxX, maxY, maxZ);
+       //out_img2 = irtkGreyImage(maxX, maxY, maxZ);
+       out_img2 = la_mask_img; 
        
         for (i=0;i<maxX;i++) for (j=0;j<maxY;j++)  for (k=0;k<maxZ;k++) {
             
