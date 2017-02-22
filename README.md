@@ -1,5 +1,5 @@
 # Segmentation for atrial wall from CT Angiography 
-Segmentation of atrial wall using iterative dilation and intensity thresholding 
+A simple segmentation method that segments the atrial wall using iterative dilation and intensity thresholding. It requires the intensity distribution information of the ventricular myocardium. 
 
 ## Usage 
 The usage is through command line: 
@@ -17,7 +17,7 @@ The program expects a binary mask to be provided as an input parameter ```<la_ma
 All input image files are either NifTII or GIPL or HDR Analyze. 
 
 ## Parameters 
-the ```<intensity_t1>``` and ```<intensity_t2>``` are intensity ranges manually selected for the atrial wall. 
+the ```<intensity_t1>``` and ```<intensity_t2>``` are intensity ranges manually selected for the atrial wall. The values ```t1``` and ```t2``` are ideally obtained from ventricular myocardium, +/- 2-standard deviations of the mean of an intensity sample from that region. 
 
 ## Output 
 The program outputs a binary image with the wall labelled sequentially at each iterative step as 1, 2 and so on. 
