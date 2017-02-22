@@ -1,4 +1,4 @@
-# Quick segmentation for atrial wall 
+# Segmentation for atrial wall from CT Angiography 
 Segmentation of atrial wall using iterative dilation and intensity thresholding 
 
 ## Usage 
