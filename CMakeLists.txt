@@ -7,14 +7,14 @@ include(${VTK_USE_FILE})
 
 
  INCLUDE_DIRECTORIES(
-	"~/Documents/Code/third_party/irtk/source/image++/include/"
-	"~/Documents/Code/third_party/irtk/source/common++/include/"
-	"~/Documents/Code/third_party/irtk/source/contrib++/include/"
-	"~/Documents/Code/third_party/irtk/source/geometry++/include/"
+	"~/Documents/Code/irtk/src/image++/include/"
+	"~/Documents/Code/irtk/src/common++/include/"
+	"~/Documents/Code/irtk/src/contrib++/include/"
+	"~/Documents/Code/irtk/src/geometry++/include/"
  )
 
  LINK_DIRECTORIES(
-	"~/Documents/Code/third_party/irtk/binary/lib/"
+	"~/Documents/Code/irtk/bin/lib/"
 	"/usr/local/lib/"
 	"~/Documents/Code/third_party/zlib/src/"
  )
